@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var scoreBox = UILabel()
     var score = 0
     var mole = UIButton()
+    var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +46,9 @@ class ViewController: UIViewController {
         view.addSubview(mole)
         
         self.view = view
+        
+        //set countdown for mole
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
         
         
     }
