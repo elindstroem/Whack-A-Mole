@@ -48,20 +48,21 @@ class ViewController: UIViewController {
         self.view = view
         
         //set countdown for mole
-        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(timerWentOff), userInfo: nil, repeats: true)
         
         
     }
     
-    @objc func makeNewButton() {
+    @objc func makeNewButton(diameter: Int) {
         mole.removeFromSuperview()
+        
         
         //new button
         let randomDiameter = Int.random(in: 10...50)
         let maxXRight = (screenWidth - 20) - randomDiameter
         let maxYBottom = (screenHeight - 20) - randomDiameter
         let randomX = Int.random(in: 20...maxXRight)
-        let randomY = Int.random(in: 20...maxYBottom)
+        let randomY = Int.random(in: (screenHeight / 10 + 20)...maxYBottom)
         
         mole.frame = CGRect(x: randomX, y: randomY, width: randomDiameter, height: randomDiameter)
         mole.layer.cornerRadius = CGFloat(randomDiameter / 2)
@@ -69,9 +70,24 @@ class ViewController: UIViewController {
     }
     
     @objc func whacked(_ sender:UIButton!) {
-        makeNewButton()
-        score += 1
+        let randomDiameter = Int.random(in: 10...50)
+        makeNewButton(diameter: randomDiameter)
+        
+        switch randomDiameter {
+        case 10...20:
+            score += 4
+        case 21...30:
+            score += 3
+        case 31...40:
+            score += 2
+        default:
+            score += 1
+        }
+        
         scoreBox.text = String(score)
+    }
+    @objc func timerWentOff() {
+        makeNewButton(diameter: Int.random(in: 10...50))
     }
 
 }
