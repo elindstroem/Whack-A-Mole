@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var grass = UILabel()
     var scoreBox = UILabel()
     var score = 0
+    var mole = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +36,39 @@ class ViewController: UIViewController {
         
         view.addSubview(grass)
         
+        //first mole
+        mole.frame = CGRect(x: screenWidth / 2, y: screenHeight / 2, width: 40, height: 40)
+        mole.layer.cornerRadius = 20
+        mole.backgroundColor = .brown
+        mole.addTarget(self, action: #selector(whacked(_:)), for: .touchUpInside)
+        
+        view.addSubview(mole)
+        
         self.view = view
+        
+        
     }
-
+    
+    @objc func makeNewButton() {
+        mole.removeFromSuperview()
+        
+        //new button
+        let randomDiameter = Int.random(in: 10...50)
+        let maxXRight = (screenWidth - 20) - randomDiameter
+        let maxYBottom = (screenHeight - 20) - randomDiameter
+        let randomX = Int.random(in: 20...maxXRight)
+        let randomY = Int.random(in: 20...maxYBottom)
+        
+        mole.frame = CGRect(x: randomX, y: randomY, width: randomDiameter, height: randomDiameter)
+        mole.layer.cornerRadius = CGFloat(randomDiameter / 2)
+        view.addSubview(mole)
+    }
+    
+    @objc func whacked(_ sender:UIButton!) {
+        makeNewButton()
+        score += 1
+        scoreBox.text = String(score)
+    }
 
 }
 
