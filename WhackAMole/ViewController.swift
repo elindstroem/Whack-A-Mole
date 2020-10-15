@@ -53,6 +53,22 @@ class ViewController: UIViewController {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let screenBounds: CGRect = UIScreen.main.bounds
+        screenWidth = Int(screenBounds.width)
+        screenHeight = Int(screenBounds.height)
+        
+        //scoreBox
+        scoreBox.frame = CGRect(x: 20, y: 20, width: screenWidth - 40, height: screenHeight/10)
+        scoreBox.text = String(score)
+        
+        //grass background
+        grass.frame = CGRect(x: 20, y: screenHeight / 10 + 20, width: screenWidth - 40, height: screenHeight - (screenHeight / 10) - 40)
+        grass.backgroundColor = .green
+    }
+    
     @objc func makeNewButton(diameter: Int) {
         mole.removeFromSuperview()
         
