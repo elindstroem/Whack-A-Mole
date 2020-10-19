@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     var theDiameter = 0
     var ended = false
     var theTime = 0.0
+    var messageBox = UILabel()
+    var missed = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,11 @@ class ViewController: UIViewController {
         mole.addTarget(self, action: #selector(whacked(_:)), for: .touchUpInside)
         
         view.addSubview(mole)
+        
+        //missed mole messageBox
+        messageBox.frame = CGRect(x: screenWidth / 2, y: 20, width: screenWidth / 2 - 20, height: screenHeight / 10)
+        
+        view.addSubview(messageBox)
         
         self.view = view
         
@@ -83,10 +90,24 @@ class ViewController: UIViewController {
     @objc func makeNewButton() {
         mole.removeFromSuperview()
         
+        if missed {
+            if score % 2 == 0 {
+                messageBox.text = "uh oh"
+            } else {
+                messageBox.text = "yikes"
+            }
+        } else {
+            if score % 2 == 0 {
+                messageBox.text = "nice"
+            } else {
+                messageBox.text = "coolio"
+            }
+        }
+        
         if numMoles >= 10 {
             endGame()
         } else {
-        
+            
             //new button
             let diameter = Int.random(in: 10...50)
             let maxXRight = (screenWidth - 20) - diameter
@@ -103,9 +124,12 @@ class ViewController: UIViewController {
             timer = Timer.scheduledTimer(timeInterval: theTime, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
             view.addSubview(mole)
         }
+        missed = true
     }
     
     @objc func whacked(_ sender:UIButton!) {
+        missed = false
+        
         switch theDiameter {
         case 10...20:
             score += 4
@@ -133,6 +157,7 @@ class ViewController: UIViewController {
     
     @objc func endGame() {//puts the button thing
         ended = true
+        messageBox.text = ""
         numMoles = 0
         timer.invalidate()
         scoreBox.removeFromSuperview()
