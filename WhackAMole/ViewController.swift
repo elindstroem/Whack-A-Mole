@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var numMoles = 0
     var endGameReport = UIButton()
     var theDiameter = 0
+    var ended = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +72,10 @@ class ViewController: UIViewController {
         //grass background
         grass.frame = CGRect(x: 20, y: screenHeight / 10 + 20, width: screenWidth - 40, height: screenHeight - (screenHeight / 10) - 40)
         grass.backgroundColor = .green
+        
+        if ended {
+            endGameReport.frame = CGRect(x: 20, y: screenHeight / 10 + 20, width: screenWidth - 40, height: screenHeight - (screenHeight / 10) - 40)
+        }
     }
     
     @objc func makeNewButton() {
@@ -113,6 +118,7 @@ class ViewController: UIViewController {
     }
     
     @objc func endGame() {//puts the button thing
+        ended = true
         numMoles = 0
         timer.invalidate()
         scoreBox.removeFromSuperview()
@@ -137,6 +143,7 @@ class ViewController: UIViewController {
         scoreBox.frame = CGRect(x: 20, y: 20, width: screenWidth - 40, height: screenHeight/10)
         score = 0
         
+        ended = false
         game()
     }
     
