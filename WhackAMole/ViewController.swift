@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var endGameReport = UIButton()
     var theDiameter = 0
     var ended = false
+    var theTime = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,8 @@ class ViewController: UIViewController {
         self.view = view
         
         //set countdown for mole
-        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
+        theTime = Double.random(in: 2.0...5.0)
+        timer = Timer.scheduledTimer(timeInterval: theTime, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
         
         
     }
@@ -96,6 +98,9 @@ class ViewController: UIViewController {
             mole.layer.cornerRadius = CGFloat(diameter / 2)
             numMoles += 1
             theDiameter = diameter
+            timer.invalidate()
+            theTime = Double.random(in: 2.0...5.0)
+            timer = Timer.scheduledTimer(timeInterval: theTime, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
             view.addSubview(mole)
         }
     }
@@ -107,6 +112,15 @@ class ViewController: UIViewController {
         case 21...30:
             score += 3
         case 31...40:
+            score += 2
+        default:
+            score += 1
+        }
+        
+        switch theTime {
+        case 2.0...3.0:
+            score += 3
+        case 3.1...4.0:
             score += 2
         default:
             score += 1
@@ -172,7 +186,8 @@ class ViewController: UIViewController {
         self.view = view
         
         //set countdown for mole
-        timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
+        theTime = Double.random(in: 2.0...5.0)
+        timer = Timer.scheduledTimer(timeInterval: theTime, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
     }
 
 }
