@@ -48,7 +48,16 @@ class ViewController: UIViewController {
         mole.frame = CGRect(x: screenWidth / 2, y: screenHeight / 2, width: 40, height: 40)
         mole.layer.cornerRadius = 20
         theDiameter = 40
-        mole.backgroundColor = .brown
+        switch theDiameter {
+            case 10...20:
+                mole.backgroundColor = .red
+            case 21...30:
+                mole.backgroundColor = .orange
+            case 31...40:
+                mole.backgroundColor = .yellow
+            default:
+                mole.backgroundColor = .blue
+        }
         mole.addTarget(self, action: #selector(whacked(_:)), for: .touchUpInside)
         
         view.addSubview(mole)
@@ -119,6 +128,16 @@ class ViewController: UIViewController {
             mole.layer.cornerRadius = CGFloat(diameter / 2)
             numMoles += 1
             theDiameter = diameter
+            switch theDiameter {
+            case 10...20:
+                mole.backgroundColor = .red
+            case 21...30:
+                mole.backgroundColor = .orange
+            case 31...40:
+                mole.backgroundColor = .yellow
+            default:
+                mole.backgroundColor = .blue
+            }
             timer.invalidate()
             theTime = Double.random(in: 2.0...5.0)
             timer = Timer.scheduledTimer(timeInterval: theTime, target: self, selector: #selector(makeNewButton), userInfo: nil, repeats: true)
